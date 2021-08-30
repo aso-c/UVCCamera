@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.4" />
         <option name="gradleJvm" value="1.7" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/libuvccamera" />
-            <option value="$PROJECT_DIR$/usbCameraTest" />
-            <option value="$PROJECT_DIR$/usbCameraTest0" />
-            <option value="$PROJECT_DIR$/usbCameraTest2" />
-            <option value="$PROJECT_DIR$/usbCameraTest3" />
-            <option value="$PROJECT_DIR$/usbCameraTest4" />
-            <option value="$PROJECT_DIR$/usbCameraTest5" />
-            <option value="$PROJECT_DIR$/usbCameraTest6" />
-            <option value="$PROJECT_DIR$/usbCameratest7" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/libuvccamera" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest0" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest2" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest3" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest4" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest5" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest6" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest7" />
           </set>
         </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
