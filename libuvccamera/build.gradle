@@ -41,18 +41,19 @@ task ndkBuild(type: Exec, description: 'Compile JNI source via NDK') {
 	Properties properties = new Properties()
 	properties.load(project.rootProject.file('local.properties').newDataInputStream())
 	def ndkBuildingDir = properties.getProperty("ndk.dir")
-	def ndkBuildPath = ndkBuildingDir
-	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-		ndkBuildPath = ndkBuildingDir + '/ndk-build.cmd'
-	} else {
-		ndkBuildPath = ndkBuildingDir + '/ndk-build'
-	}
+	//def ndkBuildPath = ndkBuildingDir
+//	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+//		ndkBuildPath = ndkBuildingDir + '/ndk-build.cmd'
+//	} else {
+//		ndkBuildPath = ndkBuildingDir + '/ndk-build'
+//	}
+	def ndkBuildPath = ndkBuildingDir + '/ndk-build' + ((Os.isFamily(Os.FAMILY_WINDOWS))? '.cmd': '')
 	commandLine ndkBuildPath, '-j8', '-C', file('src/main').absolutePath
 }
 
 dependencies {
     implementation fileTree(dir: new File(buildDir, 'libs'), include: '*.jar')
-	compile("com.serenegiant:common:${commonLibVersion}") {
+	implementation("com.serenegiant:common:${commonLibVersion}") {
 		exclude module: 'support-v4'
 	}
 }

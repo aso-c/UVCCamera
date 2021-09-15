@@ -29,5 +29,5 @@ android {
 
 dependencies {
     implementation project(':libuvccamera')
-    compile project(':encoder')
+    implementation project(':encoder')
 }
