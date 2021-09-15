@@ -41,6 +41,7 @@
     <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: com.serenegiant:common:1.1.9@aar" level="project" />
+    <orderEntry type="module" module-name="UVCCamera2.encoder" />
     <orderEntry type="module" module-name="UVCCamera2.libuvccamera" />
   </component>
 </module>
