@@ -2,12 +2,20 @@ apply plugin: 'com.android.library'
 import org.apache.tools.ant.taskdefs.condition.Os
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+//    compileSdkVersion 22
+	compileSdkVersion versionCompiler
+//    buildToolsVersion "22.0.1"
+	buildToolsVersion versionBuildTool
+
+	compileOptions {
+		sourceCompatibility javaSourceCompatibility
+		targetCompatibility javaTargetCompatibility
+	}
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 22
+//        targetSdkVersion 22
+		targetSdkVersion versionTarget
     }
 
     buildTypes {
@@ -44,5 +52,8 @@ task ndkBuild(type: Exec, description: 'Compile JNI source via NDK') {
 
 dependencies {
     implementation fileTree(dir: new File(buildDir, 'libs'), include: '*.jar')
+	compile("com.serenegiant:common:${commonLibVersion}") {
+		exclude module: 'support-v4'
+	}
 }
 
