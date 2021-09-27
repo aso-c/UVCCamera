@@ -19,25 +19,26 @@ import com.serenegiant.utils.PermissionCheck;
 
 /**
  * Created by saki on 2016/11/18.
+ * Tranlated by aso on 2021/09/24.
  *
  */
 public class BaseActivity extends Activity
 	implements MessageDialogFragment.MessageDialogListener {
 
-	private static boolean DEBUG = false;	// FIXME 実働時はfalseにセットすること
+	private static boolean DEBUG = false;	// FIXME Set to false during actual work
 	private static final String TAG = BaseActivity.class.getSimpleName();
 
-	/** UI操作のためのHandler */
+	/** Handler for UI operations */
 	private final Handler mUIHandler = new Handler(Looper.getMainLooper());
 	private final Thread mUiThread = mUIHandler.getLooper().getThread();
-	/** ワーカースレッド上で処理するためのHandler */
+	/** Handler for processing on the worker thread */
 	private Handler mWorkerHandler;
 	private long mWorkerThreadID = -1;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// ワーカースレッドを生成
+		// Create worker thread
 		if (mWorkerHandler == null) {
 			mWorkerHandler = HandlerThreadHandler.createHandler(TAG);
 			mWorkerThreadID = mWorkerHandler.getLooper().getThread().getId();
@@ -52,7 +53,7 @@ public class BaseActivity extends Activity
 
 	@Override
 	protected synchronized void onDestroy() {
-		// ワーカースレッドを破棄
+		// Destroy worker thread
 		if (mWorkerHandler != null) {
 			try {
 				mWorkerHandler.getLooper().quit();
