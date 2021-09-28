@@ -3,6 +3,7 @@
  * add some functions for no-rooted Android
  * add optimaization when compiling with gcc
  * Copyright © 2014-2016 saki <t_saki@serenegiant.com>
+ * Tranlated by aso on 2021/09/28.
  *
  * Core functions for libusb
  * Copyright © 2012-2013 Nathan Hjelm <hjelmn@cs.unm.edu>
@@ -27,11 +28,11 @@
 #define LOCAL_DEBUG 0
 
 #define LOG_TAG "libusb/core"
-#if 1	// デバッグ情報を出さない時1
+#if 1	// 1 - When no output debug information
 	#ifndef LOG_NDEBUG
-		#define	LOG_NDEBUG		// LOGV/LOGD/MARKを出力しない時
+		#define	LOG_NDEBUG		// When LOGV / LOGD / MARK is not output
 		#endif
-	#undef USE_LOGALL			// 指定したLOGxだけを出力
+	#undef USE_LOGALL			// Output only the specified LOGx
 #else
 	#define USE_LOGALL
 	#undef LOG_NDEBUG
@@ -1071,11 +1072,13 @@ out:
 DEFAULT_VISIBILITY
 libusb_device * LIBUSB_CALL libusb_ref_device(libusb_device *dev) {
 
+	int refcnt;
 	usbi_mutex_lock(&dev->lock);
 	{
-		dev->refcnt++;
+		refcnt = ++dev->refcnt;
 	}
 	usbi_mutex_unlock(&dev->lock);
+//	LOGI("refcnt=%d", refcnt);
 	return dev;
 }
 
@@ -1096,6 +1099,7 @@ void API_EXPORTED libusb_unref_device(libusb_device *dev) {
 		refcnt = --dev->refcnt;
 	}
 	usbi_mutex_unlock(&dev->lock);
+//	LOGI("refcnt=%d", dev->refcnt);
 
 	if (refcnt == 0) {
 		usbi_dbg("destroy device %d.%d", dev->bus_number, dev->device_address);
@@ -1249,9 +1253,11 @@ libusb_device * LIBUSB_CALL libusb_get_device_with_fd(libusb_context *ctx,
 	ENTER();
 
 	struct libusb_device *device = NULL;
+	// Reference counter is 1 when usbi_alloc_device is called in android_generate_device
 	int ret = android_generate_device(ctx, &device, vid, pid, serial, fd, busnum, devaddr);
-	if (LIKELY(!ret)) {
-		libusb_ref_device(device);	// これいるんかな? usbi_alloc_device内で既に呼ばれとるんやけど
+	if (ret) {
+		LOGD("android_generate_device failed:err=%d", ret);
+		device = NULL;
 	}
 
 	RET(device);
@@ -1616,8 +1622,8 @@ int API_EXPORTED libusb_claim_interface(libusb_device_handle *dev,
 	if (!(dev->claimed_interfaces & (1 << interface_number))) {
 		r = usbi_backend->claim_interface(dev, interface_number);
 		if (r == LIBUSB_ERROR_BUSY) {
-			// EBUSYが返ってきた時はたぶんカーネルドライバーがアタッチされているから
-			// デタッチ要求してから再度claimしてみる
+			// When EBUSY comes back, it's probably because the kernel driver is attached
+			// Make a detach request and then try claiming again
 			LOGV("request detach kernel driver and retry claim interface");
 			r = usbi_backend->release_interface(dev, interface_number);
 			libusb_detach_kernel_driver(dev, interface_number);

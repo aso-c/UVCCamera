@@ -2,6 +2,7 @@
 /*********************************************************************
  * modified some function to avoid crash, support Android
  * Copyright (C) 2014-2016 saki@serenegiant All rights reserved.
+ * Tranlated by aso on 2021/09/28.
  *********************************************************************/
 /*
  * Android usbfs backend for libusb
@@ -28,11 +29,11 @@
 #define LOCAL_DEBUG 0
 
 #define LOG_TAG "libusb/usbfs"
-#if 1	// デバッグ情報を出さない時1
+#if 1	// When no output debug information - set 1
 	#ifndef LOG_NDEBUG
-		#define	LOG_NDEBUG		// LOGV/LOGD/MARKを出力しない時
+		#define	LOG_NDEBUG		// When LOGV / LOGD / MARK is not output
 		#endif
-	#undef USE_LOGALL			// 指定したLOGxだけを出力
+	#undef USE_LOGALL			// Output only the specified LOGx
 #else
 	#define USE_LOGALL
 	#undef LOG_NDEBUG
@@ -206,8 +207,10 @@ static void dump_urb(int ix, int fd, struct usbfs_urb *urb) {
 		LOGE("Failed to get fd flags: %d", errno);
 	}
 	LOGI("ファイフディスクリプタフラグ:%x", ret);
-	LOGI("O_ACCMODE:%x", ret & O_ACCMODE);				// 0:読み込み専用, 1:書き込み専用, 2;読み書き可
+	LOGI ("Fife Descriptor Flag: %x", ret);
+	LOGI("O_ACCMODE:%x", ret & O_ACCMODE);			// 0: Read-only, 1: Write-only, 2; Read/Write
 	LOGI("ノンブロッキングかどうか:%d", ret & O_NONBLOCK);	// 0:ブロッキング
+	LOGI ("Non-blocking:% d", ret & O_NONBLOCK);		// 0: Blocking
 	LOGI("%d:type=%d,endpopint=0x%02x,status=%d,flag=%d", ix, urb->type, urb->endpoint, urb->status, urb->flags);
 	LOGI("%d:buffer=%p,buffer_length=%d,actual_length=%d,start_frame=%d", ix, urb->buffer, urb->buffer_length, urb->actual_length, urb->start_frame);
 	LOGI("%d:number_of_packets=%d,error_count=%d,signr=%d", ix, urb->number_of_packets, urb->error_count, urb->signr);
@@ -1300,7 +1303,6 @@ static int android_initialize_device(struct libusb_device *dev,
 	struct android_device_priv *priv = _device_priv(dev);
 	struct libusb_context *ctx = DEVICE_CTX(dev);
 	uint8_t desc[4096]; // max descriptor size is 4096 bytes
-	int descriptors_size = 512; /* Begin with a 1024 byte alloc */
 	int speed;
 	ssize_t r;
 
@@ -1310,15 +1312,15 @@ static int android_initialize_device(struct libusb_device *dev,
 	LOGD("cache descriptors in memory");
 
 	priv->descriptors_len = 0;
+	priv->fd = 0;
 	memset(desc, 0, sizeof(desc));
     if (!lseek(fd, 0, SEEK_SET)) {
-        // ディスクリプタを読み込んでローカルキャッシュする
+	// Read descriptor and cache it locally
         int length = read(fd, desc, sizeof(desc));
         LOGD("Device::init read returned %d errno %d\n", length, errno);
 		if (length > 0) {
 			priv->fd = fd;
-			descriptors_size = length;
-			priv->descriptors = usbi_reallocf(priv->descriptors, descriptors_size);
+			priv->descriptors = usbi_reallocf(priv->descriptors, length);
 			if (UNLIKELY(!priv->descriptors)) {
 				RETURN(LIBUSB_ERROR_NO_MEM, int);
 			}
@@ -1407,7 +1409,8 @@ int android_generate_device(struct libusb_context *ctx, struct libusb_device **d
 
 out:
  	if (UNLIKELY(r < 0)) {
- 		libusb_unref_device(*dev);
+ 		libusb_unref_device(*dev);	// Here the reference counter becomes 0 and is discarded
+ 		*dev = NULL;
  	} else {
  		usbi_connect_device(*dev);
  	}
