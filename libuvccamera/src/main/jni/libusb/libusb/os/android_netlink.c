@@ -4,6 +4,7 @@
  * Copyright (C) 2007-2009 Daniel Drake <dsd@gentoo.org>
  * Copyright (c) 2001 Johannes Erdfelt <johannes@erdfelt.com>
  * Copyright (c) 2013 Nathan Hjelm <hjelmn@mac.com>
+ * Tranlated by aso on 2021/09/30.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,11 +22,11 @@
  */
 
 #define LOG_TAG "libusb/netlink"
-#if 0	// デバッグ情報を出さない時1
+#if 0	// "1" - not output debug information デバッグ情報を出さない時1
 	#ifndef LOG_NDEBUG
-		#define	LOG_NDEBUG		// LOGV/LOGD/MARKを出力しない時
+		#define	LOG_NDEBUG		// not output LOGV/LOGD/MARK を出力しない時
 		#endif
-	#undef USE_LOGALL			// 指定したLOGxだけを出力
+	#undef USE_LOGALL			// only the specified LOGx output // 指定したLOGxだけを出力
 #else
 	#define USE_LOGALL
 	#undef LOG_NDEBUG

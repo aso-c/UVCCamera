@@ -3,6 +3,7 @@
  * library and sample to access to UVC web camera on non-rooted Android device
  *
  * Copyright (c) 2014-2016 saki t_saki@serenegiant.com
+ * Tranlated by aso on 2021/09/29.
  *
  * File name: UVCCamera.h
  *
@@ -116,6 +117,7 @@ class UVCCamera {
 	UVCStatusCallback *mStatusCallback;
 	UVCButtonCallback *mButtonCallback;
 	// プレビュー用
+	// For preview
 	UVCPreview *mPreview;
 	uint64_t mCtrlSupports;
 	uint64_t mPUSupports;

@@ -29,11 +29,11 @@
 #define LOCAL_DEBUG 0
 
 #define LOG_TAG "libusb/usbfs"
-#if 1	// When no output debug information - set 1
+#if 1	// "1" not output debug information デバッグ情報を出さない時1
 	#ifndef LOG_NDEBUG
-		#define	LOG_NDEBUG		// When LOGV / LOGD / MARK is not output
+		#define	LOG_NDEBUG		// not output LOGV/LOGD/MARK を出力しない時
 		#endif
-	#undef USE_LOGALL			// Output only the specified LOGx
+	#undef USE_LOGALL			// Output only the specified LOGx 指定したLOGxだけを出力
 #else
 	#define USE_LOGALL
 	#undef LOG_NDEBUG
@@ -208,9 +208,9 @@ static void dump_urb(int ix, int fd, struct usbfs_urb *urb) {
 	}
 //	LOGI("ファイフディスクリプタフラグ:%x", ret);
 	LOGI("File descriptor flag: %x", ret);
-	LOGI("O_ACCMODE:%x", ret & O_ACCMODE);			// 0: Read-only, 1: Write-only, 2; Read/Write
-//	LOGI("ノンブロッキングかどうか:%d", ret & O_NONBLOCK);	// 0:ブロッキング
-	LOGI("Whether it is non-blocking: %d", ret & O_NONBLOCK);	// 0: blocking
+	LOGI("O_ACCMODE: %x", ret & O_ACCMODE);			// 0: Read-only, 1: Write-only, 2: Read/write 0:読み込み専用, 1:書き込み専用, 2:読み書き可
+//	LOGI("ノンブロッキングかどうか:%d", ret & O_NONBLOCK);	//0:ブロッキング
+	LOGI("Non-blocking: %d", ret & O_NONBLOCK);	// 0: blocking
 	LOGI("%d:type=%d,endpopint=0x%02x,status=%d,flag=%d", ix, urb->type, urb->endpoint, urb->status, urb->flags);
 	LOGI("%d:buffer=%p,buffer_length=%d,actual_length=%d,start_frame=%d", ix, urb->buffer, urb->buffer_length, urb->actual_length, urb->start_frame);
 	LOGI("%d:number_of_packets=%d,error_count=%d,signr=%d", ix, urb->number_of_packets, urb->error_count, urb->signr);
@@ -1315,12 +1315,14 @@ static int android_initialize_device(struct libusb_device *dev,
 	priv->fd = 0;
 	memset(desc, 0, sizeof(desc));
     if (!lseek(fd, 0, SEEK_SET)) {
-	// Read descriptor and cache it locally
+        // ディスクリプタを読み込んでローカルキャッシュする
+	// Read descriptor and cache locally
         int length = read(fd, desc, sizeof(desc));
         LOGD("Device::init read returned %d errno %d\n", length, errno);
 		if (length > 0) {
 			priv->fd = fd;
-			priv->descriptors = usbi_reallocf(priv->descriptors, length);
+			descriptors_size = length;
+			priv->descriptors = usbi_reallocf(priv->descriptors, descriptors_size);
 			if (UNLIKELY(!priv->descriptors)) {
 				RETURN(LIBUSB_ERROR_NO_MEM, int);
 			}

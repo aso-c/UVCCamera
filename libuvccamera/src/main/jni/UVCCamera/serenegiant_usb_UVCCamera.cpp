@@ -3,6 +3,7 @@
  * library and sample to access to UVC web camera on non-rooted Android device
  *
  * Copyright (c) 2014-2016 saki t_saki@serenegiant.com
+ * Tranlated by aso on 2021/09/30.
  *
  * File name: serenegiant_usb_UVCCamera.cpp
  *
@@ -22,11 +23,11 @@
  * Files in the jni/libjpeg, jni/libusb, jin/libuvc, jni/rapidjson folder may have a different license, see the respective files.
 */
 
-#if 1	// デバッグ情報を出さない時
+#if 1	// "1": not issuing debug information // デバッグ情報を出さない時
 	#ifndef LOG_NDEBUG
-		#define	LOG_NDEBUG		// LOGV/LOGD/MARKを出力しない時
+		#define	LOG_NDEBUG		// "1":  disable output LOGV / LOGD / MARK を出力しない時
 		#endif
-	#undef USE_LOGALL			// 指定したLOGxだけを出力
+	#undef USE_LOGALL			// Output only the specified LOGx // 指定したLOGxだけを出力
 #else
 	#define USE_LOGALL
 	#undef LOG_NDEBUG
@@ -126,6 +127,7 @@ static ID_TYPE nativeCreate(JNIEnv *env, jobject thiz) {
 }
 
 // native側のカメラオブジェクトを破棄
+// Discard the camera object on the native side
 static void nativeDestroy(JNIEnv *env, jobject thiz,
 	ID_TYPE id_camera) {
 
@@ -140,6 +142,7 @@ static void nativeDestroy(JNIEnv *env, jobject thiz,
 
 //======================================================================
 // カメラへ接続
+// Connect to camera
 static jint nativeConnect(JNIEnv *env, jobject thiz,
 	ID_TYPE id_camera,
 	jint vid, jint pid, jint fd,
@@ -158,6 +161,7 @@ static jint nativeConnect(JNIEnv *env, jobject thiz,
 }
 
 // カメラとの接続を解除
+// Disconnect from the camera
 static jint nativeRelease(JNIEnv *env, jobject thiz,
 	ID_TYPE id_camera) {
 
@@ -215,6 +219,7 @@ static jobject nativeGetSupportedSize(JNIEnv *env, jobject thiz,
 
 //======================================================================
 // プレビュー画面の大きさをセット
+// Set the size of the preview screen
 static jint nativeSetPreviewSize(JNIEnv *env, jobject thiz,
 	ID_TYPE id_camera, jint width, jint height, jint min_fps, jint max_fps, jint mode, jfloat bandwidth) {
 
@@ -238,6 +243,7 @@ static jint nativeStartPreview(JNIEnv *env, jobject thiz,
 }
 
 // プレビューを停止
+// Stop preview
 static jint nativeStopPreview(JNIEnv *env, jobject thiz,
 	ID_TYPE id_camera) {
 
@@ -291,6 +297,7 @@ static jint nativeSetCaptureDisplay(JNIEnv *env, jobject thiz,
 
 //======================================================================
 // カメラコントロールでサポートしている機能を取得する
+// Get the features supported by the camera control
 static jlong nativeGetCtrlSupports(JNIEnv *env, jobject thiz,
 	ID_TYPE id_camera) {
 
@@ -307,6 +314,7 @@ static jlong nativeGetCtrlSupports(JNIEnv *env, jobject thiz,
 }
 
 // プロセッシングユニットでサポートしている機能を取得する
+// Get the features supported by the processing unit
 static jlong nativeGetProcSupports(JNIEnv *env, jobject thiz,
 	ID_TYPE id_camera) {
 
@@ -333,7 +341,7 @@ static jint nativeUpdateScanningModeLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateScanningModeLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mScanningModeMin", min);
 			setField_int(env, thiz, "mScanningModeMax", max);
 			setField_int(env, thiz, "mScanningModeDef", def);
@@ -377,7 +385,7 @@ static jint nativeUpdateExposureModeLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateExposureModeLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mExposureModeMin", min);
 			setField_int(env, thiz, "mExposureModeMax", max);
 			setField_int(env, thiz, "mExposureModeDef", def);
@@ -421,7 +429,7 @@ static jint nativeUpdateExposurePriorityLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateExposurePriorityLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mExposurePriorityMin", min);
 			setField_int(env, thiz, "mExposurePriorityMax", max);
 			setField_int(env, thiz, "mExposurePriorityDef", def);
@@ -465,7 +473,7 @@ static jint nativeUpdateExposureLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateExposureLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mExposureMin", min);
 			setField_int(env, thiz, "mExposureMax", max);
 			setField_int(env, thiz, "mExposureDef", def);
@@ -509,7 +517,7 @@ static jint nativeUpdateExposureRelLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateExposureRelLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mExposureRelMin", min);
 			setField_int(env, thiz, "mExposureRelMax", max);
 			setField_int(env, thiz, "mExposureRelDef", def);
@@ -553,7 +561,7 @@ static jint nativeUpdateAutoFocusLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateAutoFocusLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mAutoFocusMin", min);
 			setField_int(env, thiz, "mAutoFocusMax", max);
 			setField_int(env, thiz, "mAutoFocusDef", def);
@@ -597,7 +605,7 @@ static jint nativeUpdateAutoWhiteBlanceLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateAutoWhiteBlanceLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mAutoWhiteBlanceMin", min);
 			setField_int(env, thiz, "mAutoWhiteBlanceMax", max);
 			setField_int(env, thiz, "mAutoWhiteBlanceDef", def);
@@ -641,7 +649,7 @@ static jint nativeUpdateAutoWhiteBlanceCompoLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateAutoWhiteBlanceCompoLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mAutoWhiteBlanceCompoMin", min);
 			setField_int(env, thiz, "mAutoWhiteBlanceCompoMax", max);
 			setField_int(env, thiz, "mAutoWhiteBlanceCompoDef", def);
@@ -685,7 +693,7 @@ static jint nativeUpdateBrightnessLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateBrightnessLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mBrightnessMin", min);
 			setField_int(env, thiz, "mBrightnessMax", max);
 			setField_int(env, thiz, "mBrightnessDef", def);
@@ -729,7 +737,7 @@ static jint nativeUpdateFocusLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateFocusLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mFocusMin", min);
 			setField_int(env, thiz, "mFocusMax", max);
 			setField_int(env, thiz, "mFocusDef", def);
@@ -773,7 +781,7 @@ static jint nativeUpdateFocusRelLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateFocusRelLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mFocusRelMin", min);
 			setField_int(env, thiz, "mFocusRelMax", max);
 			setField_int(env, thiz, "mFocusRelDef", def);
@@ -817,7 +825,7 @@ static jint nativeUpdateIrisLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateIrisLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mIrisMin", min);
 			setField_int(env, thiz, "mIrisMax", max);
 			setField_int(env, thiz, "mIrisDef", def);
@@ -861,7 +869,7 @@ static jint nativeUpdateIrisRelLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateIrisRelLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mIrisRelMin", min);
 			setField_int(env, thiz, "mIrisRelMax", max);
 			setField_int(env, thiz, "mIrisRelDef", def);
@@ -905,7 +913,7 @@ static jint nativeUpdatePanLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updatePanLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mPanMin", min);
 			setField_int(env, thiz, "mPanMax", max);
 			setField_int(env, thiz, "mPanDef", def);
@@ -949,7 +957,7 @@ static jint nativeUpdateTiltLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateTiltLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mTiltMin", min);
 			setField_int(env, thiz, "mTiltMax", max);
 			setField_int(env, thiz, "mTiltDef", def);
@@ -993,7 +1001,7 @@ static jint nativeUpdateRollLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateRollLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mRollMin", min);
 			setField_int(env, thiz, "mRollMax", max);
 			setField_int(env, thiz, "mRollDef", def);
@@ -1037,7 +1045,7 @@ static jint nativeUpdatePanRelLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updatePanRelLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mPanRelMin", min);
 			setField_int(env, thiz, "mPanRelMax", max);
 			setField_int(env, thiz, "mPanRelDef", def);
@@ -1081,7 +1089,7 @@ static jint nativeUpdateTiltRelLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateTiltRelLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mTiltRelMin", min);
 			setField_int(env, thiz, "mTiltRelMax", max);
 			setField_int(env, thiz, "mTiltRelDef", def);
@@ -1125,7 +1133,7 @@ static jint nativeUpdateRollRelLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateRollRelLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mRollRelMin", min);
 			setField_int(env, thiz, "mRollRelMax", max);
 			setField_int(env, thiz, "mRollRelDef", def);
@@ -1169,7 +1177,7 @@ static jint nativeUpdateContrastLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateContrastLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mContrastMin", min);
 			setField_int(env, thiz, "mContrastMax", max);
 			setField_int(env, thiz, "mContrastDef", def);
@@ -1213,7 +1221,7 @@ static jint nativeUpdateAutoContrastLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateAutoContrastLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mAutoContrastMin", min);
 			setField_int(env, thiz, "mAutoContrastMax", max);
 			setField_int(env, thiz, "mAutoContrastDef", def);
@@ -1257,7 +1265,7 @@ static jint nativeUpdateSharpnessLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateSharpnessLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mSharpnessMin", min);
 			setField_int(env, thiz, "mSharpnessMax", max);
 			setField_int(env, thiz, "mSharpnessDef", def);
@@ -1301,7 +1309,7 @@ static jint nativeUpdateGainLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateGainLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mGainMin", min);
 			setField_int(env, thiz, "mGainMax", max);
 			setField_int(env, thiz, "mGainDef", def);
@@ -1345,7 +1353,7 @@ static jint nativeUpdateGammaLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateGammaLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mGammaMin", min);
 			setField_int(env, thiz, "mGammaMax", max);
 			setField_int(env, thiz, "mGammaDef", def);
@@ -1389,7 +1397,7 @@ static jint nativeUpdateWhiteBlanceLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateWhiteBlanceLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mWhiteBlanceMin", min);
 			setField_int(env, thiz, "mWhiteBlanceMax", max);
 			setField_int(env, thiz, "mWhiteBlanceDef", def);
@@ -1433,7 +1441,7 @@ static jint nativeUpdateWhiteBlanceCompoLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateWhiteBlanceCompoLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mWhiteBlanceCompoMin", min);
 			setField_int(env, thiz, "mWhiteBlanceCompoMax", max);
 			setField_int(env, thiz, "mWhiteBlanceCompoDef", def);
@@ -1477,7 +1485,7 @@ static jint nativeUpdateBacklightCompLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateBacklightCompLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mBacklightCompMin", min);
 			setField_int(env, thiz, "mBacklightCompMax", max);
 			setField_int(env, thiz, "mBacklightCompDef", def);
@@ -1521,7 +1529,7 @@ static jint nativeUpdateSaturationLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateSaturationLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mSaturationMin", min);
 			setField_int(env, thiz, "mSaturationMax", max);
 			setField_int(env, thiz, "mSaturationDef", def);
@@ -1565,7 +1573,7 @@ static jint nativeUpdateHueLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateHueLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mHueMin", min);
 			setField_int(env, thiz, "mHueMax", max);
 			setField_int(env, thiz, "mHueDef", def);
@@ -1609,7 +1617,7 @@ static jint nativeUpdateAutoHueLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateAutoHueLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mAutoHueMin", min);
 			setField_int(env, thiz, "mAutoHueMax", max);
 			setField_int(env, thiz, "mAutoHueDef", def);
@@ -1653,7 +1661,7 @@ static jint nativeUpdatePowerlineFrequencyLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updatePowerlineFrequencyLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mPowerlineFrequencyMin", min);
 			setField_int(env, thiz, "mPowerlineFrequencyMax", max);
 			setField_int(env, thiz, "mPowerlineFrequencyDef", def);
@@ -1697,7 +1705,7 @@ static jint nativeUpdateZoomLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateZoomLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mZoomMin", min);
 			setField_int(env, thiz, "mZoomMax", max);
 			setField_int(env, thiz, "mZoomDef", def);
@@ -1741,7 +1749,7 @@ static jint nativeUpdateZoomRelLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateZoomRelLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mZoomRelMin", min);
 			setField_int(env, thiz, "mZoomRelMax", max);
 			setField_int(env, thiz, "mZoomRelDef", def);
@@ -1785,7 +1793,7 @@ static jint nativeUpdateDigitalMultiplierLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateDigitalMultiplierLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mDigitalMultiplierMin", min);
 			setField_int(env, thiz, "mDigitalMultiplierMax", max);
 			setField_int(env, thiz, "mDigitalMultiplierDef", def);
@@ -1829,7 +1837,7 @@ static jint nativeUpdateDigitalMultiplierLimitLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateDigitalMultiplierLimitLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mDigitalMultiplierLimitMin", min);
 			setField_int(env, thiz, "mDigitalMultiplierLimitMax", max);
 			setField_int(env, thiz, "mDigitalMultiplierLimitDef", def);
@@ -1873,7 +1881,7 @@ static jint nativeUpdateAnalogVideoStandardLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateAnalogVideoStandardLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mAnalogVideoStandardMin", min);
 			setField_int(env, thiz, "mAnalogVideoStandardMax", max);
 			setField_int(env, thiz, "mAnalogVideoStandardDef", def);
@@ -1917,7 +1925,7 @@ static jint nativeUpdateAnalogVideoLockStateLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updateAnalogVideoLockStateLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mAnalogVideoLockStateMin", min);
 			setField_int(env, thiz, "mAnalogVideoLockStateMax", max);
 			setField_int(env, thiz, "mAnalogVideoLockStateDef", def);
@@ -1961,7 +1969,7 @@ static jint nativeUpdatePrivacyLimit(JNIEnv *env, jobject thiz,
 		int min, max, def;
 		result = camera->updatePrivacyLimit(min, max, def);
 		if (!result) {
-			// Java側へ書き込む
+			// Write to Java side 側へ書き込む
 			setField_int(env, thiz, "mPrivacyMin", min);
 			setField_int(env, thiz, "mPrivacyMax", max);
 			setField_int(env, thiz, "mPrivacyDef", def);

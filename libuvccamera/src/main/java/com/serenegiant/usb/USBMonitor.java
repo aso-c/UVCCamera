@@ -4,7 +4,7 @@ package com.serenegiant.usb;
  * library and sample to access to UVC web camera on non-rooted Android device
  *
  * Copyright (c) 2014-2016 saki t_saki@serenegiant.com
- * Tranlated by aso on 2021/10/05.
+ * Tranlated by aso on 2021/10/07.
  *
  * File name: USBMonitor.java
  *
@@ -439,6 +439,7 @@ public final class USBMonitor {
 						mUsbManager.requestPermission(device, mPermissionIntent);
 					} catch (final Exception e) {
 						// Android5.1.xのGALAXY系でandroid.permission.sec.MDM_APP_MGMTという意味不明の例外生成するみたい
+						// It seems to generate an unknown exception called android.permission.sec.MDM_APP_MGMT in the GALAXY system of Android 5.1.x
 						Log.w(TAG, e);
 						processCancel(device);
 						result = true;
@@ -460,14 +461,14 @@ public final class USBMonitor {
 	 * Open the specified UsbDevice
 	 * @param device
 	 * @return
-	 * @throws SecurityException Throws a SecurityException if you don't have permission
-	 *                           パーミッションがなければSecurityExceptionを投げる
+	 * @throws SecurityException generate a SecurityException if you don't have permissions
+	 *                               パーミッションがなければSecurityExceptionを投げる
 	 */
 	public UsbControlBlock openDevice(final UsbDevice device) throws SecurityException {
 		if (hasPermission(device)) {
 			UsbControlBlock result = mCtrlBlocks.get(device);
 			if (result == null) {
-				result = new UsbControlBlock(USBMonitor.this, device);    // この中でopenDeviceする
+				result = new UsbControlBlock(USBMonitor.this, device);    // OpenDevice in this // この中でopenDeviceする
 				mCtrlBlocks.put(device, result);
 			}
 			return result;
@@ -633,8 +634,7 @@ public final class USBMonitor {
 	 * Generated from vendor ID, product ID, device class, device subclass, device protocol
 	 * 同種の製品だと同じキー名になるので注意
 	 * Note that the same key name will be used for products of the same type.
-	 * @param device Returns an empty string if null
-	 *                   なら空文字列を返す
+	 * @param device null Returns an empty string // なら空文字列を返す
 	 * @return
 	 */
 	public static final String getDeviceKeyName(final UsbDevice device) {
@@ -718,7 +718,7 @@ public final class USBMonitor {
 	/**
 	 * デバイスキーを整数として取得
 	 * Get device key as an integer
-	 * Get the hasCode of the character string obtained by getDeviceKeyNameで得られる文字列のhasCodeを取得
+	 * Get the hasCode of the string obtained by getDeviceKeyNameで得られる文字列のhasCodeを取得
 	 * Note: for products of the same type generated same device key when useNewAPI=falseで同種の製品だと同じデバイスキーになるので注意
 	 * @param device
 	 * @param useNewAPI
@@ -734,7 +734,7 @@ public final class USBMonitor {
 	 * Get the hasCode of the character string obtained by getDeviceKeyNameで得られる文字列のhasCodeを取得
 	 * Note: for products of the same type generated same device key when serial is null & useNewAPI=falseで同種の製品だと同じデバイスキーになるので注意
 	 * @param device nullなら0を返す Returns 0 if null
-	 * @param serial UsbDeviceConnection#getSerial pass it's the serial number , null and useNewAPI = true and API> = 21 to get it internally
+	 * @param serial UsbDeviceConnection#getSerial pass it's the serial number, null and useNewAPI = true and API> = 21 to get it internally
 	 *               UsbDeviceConnection#getSerialで取得したシリアル番号を渡す, nullでuseNewAPI=trueでAPI>=21なら内部で取得
 	 * @param useNewAPI Also use methods that can only be used with API> = 21 or API> = 23 (however, depending on the device, null is returned, so it depends on the device)
 	 *                  API>=21またはAPI>=23のみで使用可能なメソッドも使用する(ただし機器によってはnullが返ってくるので有効かどうかは機器による)
@@ -904,7 +904,7 @@ public final class USBMonitor {
 	/**
 	 * ベンダー名・製品名・バージョン・シリアルを取得する
 	 * Get vendor name, product name, version, serial
-	 * #updateDeviceInfo(final UsbManager, final UsbDevice, final UsbDeviceInfo) helper methods/のヘルパーメソッド
+	 * #updateDeviceInfo(final UsbManager, final UsbDevice, final UsbDeviceInfo) helper methods / のヘルパーメソッド
 	 * @param context
 	 * @param device
 	 * @return
@@ -1052,7 +1052,9 @@ public final class USBMonitor {
 			mWeakDevice = new WeakReference<UsbDevice>(device);
 			mBusNum = src.mBusNum;
 			mDevNum = src.mDevNum;
-			// FIXME Add to USBMonitor.mCtrlBlocks (Now it's a HashMap, so adding it will replace it, so it won't work, hang a List on a List or HashMap?) //  USBMonitor.mCtrlBlocksに追加する(今はHashMapなので追加すると置き換わってしまうのでだめ, ListかHashMapにListをぶら下げる?)
+			// FIXME USBMonitor.mCtrlBlocksに追加する(今はHashMapなので追加すると置き換わってしまうのでだめ, ListかHashMapにListをぶら下げる?)
+			// Add to FIXME USBMonitor.mCtrlBlocks (Now it's a HashMap, so if you add it, it will be replaced, so it's useless,
+			// hang a List on a List or HashMap?)
 		}
 
 		/**

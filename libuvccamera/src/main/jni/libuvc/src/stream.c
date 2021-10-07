@@ -10,6 +10,8 @@
  *  Copyright (C) 2010-2012 Ken Tossell
  *  All rights reserved.
  *
+ * Tranlated by aso on 2021/09/30.
+ *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
  *  are met:
@@ -45,11 +47,11 @@
 #define LOCAL_DEBUG 0
 
 #define LOG_TAG "libuvc/stream"
-#if 1	// デバッグ情報を出さない時1
+#if 1	// "1" - not output debug information デバッグ情報を出さない時1
 	#ifndef LOG_NDEBUG
-		#define	LOG_NDEBUG		// LOGV/LOGD/MARKを出力しない時
+		#define	LOG_NDEBUG		// not output LOGV/LOGD/MARKを出力しない時
 		#endif
-	#undef USE_LOGALL			// 指定したLOGxだけを出力
+	#undef USE_LOGALL			// Output only specified LOGx 指定したLOGxだけを出力
 #else
 	#define USE_LOGALL
 	#undef LOG_NDEBUG
@@ -587,7 +589,7 @@ uvc_error_t uvc_probe_stream_ctrl(uvc_device_handle_t *devh,
 		return err;
 	}
 
-	err = uvc_query_stream_ctrl(devh, ctrl, 1, UVC_GET_CUR);	// probe query ここでエラーが返ってくる
+	err = uvc_query_stream_ctrl(devh, ctrl, 1, UVC_GET_CUR);	// probe query returns an error here ここでエラーが返ってくる
 	if (UNLIKELY(err)) {
 		LOGE("uvc_query_stream_ctrl(UVC_GET_CUR):err=%d", err);
 		return err;

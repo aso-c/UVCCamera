@@ -3,6 +3,7 @@
 # * library and sample to access to UVC web camera on non-rooted Android device
 # * 
 # * Copyright (c) 2015-2016 saki t_saki@serenegiant.com
+# * Tranlated by aso on 2021/09/29.
 # * 
 # * File name: Android.mk
 # * 
@@ -30,9 +31,11 @@ include $(CLEAR_VARS)
 # CFLAGS := -Werror
 
 #生成するモジュール名
+# Generated module name
 LOCAL_MODULE    := jpeg-turbo1500_static
 
 #インクルードファイルのパスを指定
+# Specify the include file path
 LOCAL_C_INCLUDES := \
         $(LOCAL_PATH)/ \
         $(LOCAL_PATH)/include \
@@ -44,19 +47,23 @@ LOCAL_EXPORT_C_INCLUDES := \
         $(LOCAL_PATH)/simd \
 
 #コンパイラのオプションフラグを指定
+# Specify compiler option flag
 LOCAL_CFLAGS := $(LOCAL_C_INCLUDES:%=-I%)
 LOCAL_CFLAGS += -DANDROID_NDK
 
 #リンクするライブラリを指定(静的モジュールにする時は不要)
+# Specify the library to link (not required when making a static module)
 #LOCAL_LDLIBS := -L$(SYSROOT)/usr/lib -ldl	# to avoid NDK issue(no need for static library)
 
 #このモジュールを外部モジュールとしてリンクする時のライブラリを指定
+# Specify the library when linking this module as an external module
 
 LOCAL_ARM_MODE := arm
 
 LOCAL_ASMFLAGS += -DELF
 
 # コンパイル・リンクするソースファイル
+# Source files to compile and link
 
 LOCAL_SRC_FILES += \
 	jcapimin.c \
@@ -119,6 +126,7 @@ LOCAL_SRC_FILES += \
 
 ifeq ($(TARGET_ARCH_ABI),armeabi)
 #NEONを有効にする時
+#NEON Enabling
 #LOCAL_ARM_NEON := true
 LOCAL_SRC_FILES += simd/jsimd_arm.c simd/jsimd_arm_neon.S
 
@@ -127,6 +135,7 @@ LOCAL_CFLAGS += \
 
 else ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 #NEONを有効にする時
+#NEON Enabling
 #LOCAL_ARM_NEON := true
 LOCAL_SRC_FILES += simd/jsimd_arm.c simd/jsimd_arm_neon.S
 
@@ -135,6 +144,7 @@ LOCAL_CFLAGS += \
 
 else ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
 #NEONを有効にする時
+#NEON Enabling
 #LOCAL_ARM_NEON := true
 LOCAL_SRC_FILES += simd/jsimd_arm64.c simd/jsimd_arm64_neon.S
 
@@ -230,6 +240,7 @@ LOCAL_CPPFLAGS += -Wno-incompatible-pointer-types
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 
 # 静的ライブラリとしてビルド
+# Build as static library
 include $(BUILD_STATIC_LIBRARY)
 
 ######################################################################

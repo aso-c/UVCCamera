@@ -4,6 +4,7 @@ package com.serenegiant.usb;
  * library and sample to access to UVC web camera on non-rooted Android device
  *
  * Copyright (c) 2015-2016 saki t_saki@serenegiant.com
+ * Tranlated by aso on 2021/09/29.
  *
  * File name: Size.java
  *
@@ -32,6 +33,8 @@ public class Size implements Parcelable {
 	//
 	/**
 	 * native側のuvc_raw_format_tの値, こっちは主にlibuvc用
+	 * The value of uvc_raw_format_t on the native side,
+	 * this is mainly for libuvc
 	 * 9999 is still image
 	 */
 	public int type;
@@ -47,11 +50,13 @@ public class Size implements Parcelable {
 	public int frameIntervalIndex;
 	public int[] intervals;
 	// ここ以下はframeIntervalTypeとintervalsから#updateFrameRateで計算する
+	// The following is calculated from frameIntervalType and intervals with #updateFrameRate
 	public float[] fps;
 	private String frameRates;
 
 	/**
 	 * コンストラクタ
+	 * constructor
 	 * @param _type native側のraw_format_tの値, ただし9999は静止画
 	 * @param _frame_type native側のraw_frame_tの値
 	 * @param _index
@@ -72,6 +77,7 @@ public class Size implements Parcelable {
 
 	/**
 	 * コンストラクタ
+	 * constructor
 	 * @param _type native側のraw_format_tの値, ただし9999は静止画
 	 * @param _frame_type native側のraw_frame_tの値
 	 * @param _index
@@ -97,6 +103,7 @@ public class Size implements Parcelable {
 
 	/**
 	 * コンストラクタ
+	 * constructor
 	 * @param _type native側のraw_format_tの値, ただし9999は静止画
 	 * @param _frame_type native側のraw_frame_tの値
 	 * @param _index
@@ -125,6 +132,7 @@ public class Size implements Parcelable {
 
 	/**
 	 * コピーコンストラクタ
+	 * Copy constructor
 	 * @param other
 	 */
 	public Size(final Size other) {
@@ -147,6 +155,7 @@ public class Size implements Parcelable {
 
 	private Size(final Parcel source) {
 		// 読み取り順はwriteToParcelでの書き込み順と同じでないとダメ
+		// The read order must be the same as the write order in writeToParcel.
 		type = source.readInt();
 		frame_type = source.readInt();
 		index = source.readInt();
@@ -198,6 +207,7 @@ public class Size implements Parcelable {
 
 	public void setCurrentFrameRate(final float frameRate) {
 		// 一番近いのを選ぶ
+		// Choose the closest
 		int index = -1;
 		final int n = fps != null ? fps.length : 0;
 		for (int i = 0; i < n; i++) {
@@ -260,6 +270,7 @@ public class Size implements Parcelable {
 				}
 			} catch (final Exception e) {
 				// ignore, なんでかminとmaxが0になってるんちゃうかな
+				// ignore, I wonder if min and max are 0 for some reason
 				fps = null;
 			}
 		}

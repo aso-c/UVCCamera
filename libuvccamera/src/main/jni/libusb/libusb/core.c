@@ -3,12 +3,12 @@
  * add some functions for no-rooted Android
  * add optimaization when compiling with gcc
  * Copyright © 2014-2016 saki <t_saki@serenegiant.com>
- * Tranlated by aso on 2021/09/28.
  *
  * Core functions for libusb
  * Copyright © 2012-2013 Nathan Hjelm <hjelmn@cs.unm.edu>
  * Copyright © 2007-2008 Daniel Drake <dsd@gentoo.org>
  * Copyright © 2001 Johannes Erdfelt <johannes@erdfelt.com>
+ * Tranlated by aso on 2021/09/30.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,11 +28,11 @@
 #define LOCAL_DEBUG 0
 
 #define LOG_TAG "libusb/core"
-#if 1	// 1 - When no output debug information
+#if 1	// "1" - not issued debug information // デバッグ情報を出さない時1
 	#ifndef LOG_NDEBUG
-		#define	LOG_NDEBUG		// When LOGV / LOGD / MARK is not output
+		#define	LOG_NDEBUG		// not output LOGV/LOGD/MARKを出力しない時
 		#endif
-	#undef USE_LOGALL			// Output only the specified LOGx
+	#undef USE_LOGALL			// Output only the specified LOGx // 指定したLOGxだけを出力
 #else
 	#define USE_LOGALL
 	#undef LOG_NDEBUG

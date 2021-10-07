@@ -4,13 +4,14 @@
  * add and modified some functions to support non-rooted Android devices
  * and modified some function for optimaization with gcc
  * Copyright (C) 2014-2016 saki@serenegiant All rights reserved.
- * Tranlated by aso on 2021/09/28.
  *********************************************************************/
 /*********************************************************************
  * Software License Agreement (BSD License)
  *
  *  Copyright (C) 2010-2012 Ken Tossell
  *  All rights reserved.
+ *
+ * Tranlated by aso on 2021/09/30.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -47,11 +48,11 @@
 #define LOCAL_DEBUG 0
 
 #define LOG_TAG "libuvc/device"
-#if 1	// デバッグ情報を出さない時1
+#if 1	// "1" - not output debug information デバッグ情報を出さない時1
 	#ifndef LOG_NDEBUG
-		#define	LOG_NDEBUG		// LOGV/LOGD/MARKを出力しない時
+		#define	LOG_NDEBUG		// not output LOGV/LOGD/MARKを出力しない時
 		#endif
-	#undef USE_LOGALL			// 指定したLOGxだけを出力
+	#undef USE_LOGALL			// Output only specified LOGx 指定したLOGxだけを出力
 #else
 	#define USE_LOGALL
 	#undef LOG_NDEBUG
