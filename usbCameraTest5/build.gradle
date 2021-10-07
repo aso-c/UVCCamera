@@ -26,6 +26,5 @@ android {
 }
 
 dependencies {
-    implementation project(':libuvccamera')
-    implementation project(':encoder')
+    compile project(':usbCameraCommon')
 }

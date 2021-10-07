@@ -11,8 +11,8 @@
         <option name="modules">
           <set>
             <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2" />
-            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/encoder" />
             <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/libuvccamera" />
+            <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraCommon" />
             <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest" />
             <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest0" />
             <option value="/huge/user/aso/job/NXP/RainboW/Android/UVCCamera2/usbCameraTest2" />

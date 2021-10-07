@@ -2,7 +2,7 @@
 /*********************************************************************
  * modified some function to avoid crash, support Android
  * Copyright (C) 2014-2016 saki@serenegiant All rights reserved.
- * Tranlated by aso on 2021/09/28.
+ * Copyright (C) 2020-2021 aso <aso17@ro.ru> All rights reserved.
  *********************************************************************/
 /*
  * Android usbfs backend for libusb
@@ -206,11 +206,11 @@ static void dump_urb(int ix, int fd, struct usbfs_urb *urb) {
 	if (UNLIKELY(ret == -1)) {
 		LOGE("Failed to get fd flags: %d", errno);
 	}
-	LOGI("ファイフディスクリプタフラグ:%x", ret);
-	LOGI ("Fife Descriptor Flag: %x", ret);
+//	LOGI("ファイフディスクリプタフラグ:%x", ret);
+	LOGI("File descriptor flag: %x", ret);
 	LOGI("O_ACCMODE:%x", ret & O_ACCMODE);			// 0: Read-only, 1: Write-only, 2; Read/Write
-	LOGI("ノンブロッキングかどうか:%d", ret & O_NONBLOCK);	// 0:ブロッキング
-	LOGI ("Non-blocking:% d", ret & O_NONBLOCK);		// 0: Blocking
+//	LOGI("ノンブロッキングかどうか:%d", ret & O_NONBLOCK);	// 0:ブロッキング
+	LOGI("Whether it is non-blocking: %d", ret & O_NONBLOCK);	// 0: blocking
 	LOGI("%d:type=%d,endpopint=0x%02x,status=%d,flag=%d", ix, urb->type, urb->endpoint, urb->status, urb->flags);
 	LOGI("%d:buffer=%p,buffer_length=%d,actual_length=%d,start_frame=%d", ix, urb->buffer, urb->buffer_length, urb->actual_length, urb->start_frame);
 	LOGI("%d:number_of_packets=%d,error_count=%d,signr=%d", ix, urb->number_of_packets, urb->error_count, urb->signr);
