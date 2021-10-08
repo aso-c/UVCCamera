@@ -94,8 +94,8 @@ public class CameraFragment extends BaseFragment {
 			mUSBMonitor = new USBMonitor(getActivity().getApplicationContext(), mOnDeviceConnectListener);
 			final List<DeviceFilter> filters = DeviceFilter.getDeviceFilters(getActivity(), R.xml.device_filter);
 			mUSBMonitor.setDeviceFilter(filters);
-		}
-	}
+		}; /* if mUSBMonitor == null */
+	}; /* onCreate */
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
@@ -119,7 +119,7 @@ public class CameraFragment extends BaseFragment {
 		mCameraViewSub = (SurfaceView)rootView.findViewById(R.id.camera_view_sub);
 		mCameraViewSub.setOnClickListener(mOnClickListener);
 		return rootView;
-	}
+	}; /* onCreateView */
 
 	@Override
 	public void onResume() {
@@ -153,9 +153,9 @@ public class CameraFragment extends BaseFragment {
 		if (mCameraClient != null) {
 			mCameraClient.release();
 			mCameraClient = null;
-		}
+		}; /* if mCameraClient != null */
 		super.onDestroy();
-	}
+	}; /* onDestroy */
 
 	@Override
 	public void onDetach() {
@@ -201,7 +201,7 @@ public class CameraFragment extends BaseFragment {
 			}, 0);
 			enableButtons(false);
 			updateCameraDialog();
-		}
+		}; /* onDettach */
 
 		@Override
 		public void onCancel(final UsbDevice device) {
@@ -235,8 +235,8 @@ public class CameraFragment extends BaseFragment {
 			mCameraClient.select(list.get(index));
 			mCameraClient.resize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 			mCameraClient.connect();
-		}
-	}
+		}; /* if list.size() > index */
+	}; /* openUVCCamera( */
 
 	private final ICameraClientCallback mCameraListener = new ICameraClientCallback() {
 		@Override
@@ -250,7 +250,7 @@ public class CameraFragment extends BaseFragment {
 			// start UVCService
 			final Intent intent = new Intent(getActivity(), UVCService.class);
 			getActivity().startService(intent);
-		}
+		}; /* onConnect */
 
 		@Override
 		public void onDisconnect() {
@@ -259,7 +259,7 @@ public class CameraFragment extends BaseFragment {
 			enableButtons(false);
 		}
 
-	};
+	}; /* onDisconnect */
 
 	private final OnClickListener mOnClickListener = new OnClickListener() {
 		@Override

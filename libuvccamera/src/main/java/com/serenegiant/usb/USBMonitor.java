@@ -389,8 +389,8 @@ public final class USBMonitor {
 	/**
 	 * return whether the specific Usb device has permission
 	 * @param device
-	 *               指定したUsbDeviceにパーミッションがある
 	 * @return true: The specified UsbDevice has permissions
+	 *               指定したUsbDeviceにパーミッションがある
 	 * @throws IllegalStateException
 	 */
 	public final boolean hasPermission(final UsbDevice device) throws IllegalStateException {

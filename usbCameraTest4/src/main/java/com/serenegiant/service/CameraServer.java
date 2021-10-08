@@ -311,7 +311,7 @@ public final class CameraServer extends Handler {
 		@Override
 		public void onDestroy() {
 		}
-	};
+	}; /* mRenderHolderCallback */
 
 	private static final class CameraThread extends Thread {
 		private static final String TAG_THREAD = "CameraThread";

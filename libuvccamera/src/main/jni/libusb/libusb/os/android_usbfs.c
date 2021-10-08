@@ -1321,8 +1321,7 @@ static int android_initialize_device(struct libusb_device *dev,
         LOGD("Device::init read returned %d errno %d\n", length, errno);
 		if (length > 0) {
 			priv->fd = fd;
-			descriptors_size = length;
-			priv->descriptors = usbi_reallocf(priv->descriptors, descriptors_size);
+			priv->descriptors = usbi_reallocf(priv->descriptors, length);
 			if (UNLIKELY(!priv->descriptors)) {
 				RETURN(LIBUSB_ERROR_NO_MEM, int);
 			}
@@ -1393,7 +1392,7 @@ int android_generate_device(struct libusb_context *ctx, struct libusb_device **d
  	 * a session ID. */
 	session_id = busnum << 8 | devaddr;
  	LOGD("allocating new device for %d/%d (session %ld)", busnum, devaddr, session_id);
- 	*dev = usbi_alloc_device(ctx, session_id);
+ 	*dev = usbi_alloc_device(ctx, session_id);	// Reference counter = 1 at this point // この時点で参照カウンタ=1
  	if (UNLIKELY(!dev)) {
  		RETURN(LIBUSB_ERROR_NO_MEM, int);
  	}

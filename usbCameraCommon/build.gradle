@@ -29,5 +29,5 @@ dependencies {
     api("com.serenegiant:common:${commonLibVersion}") {
    		exclude module: 'support-v4'
    	}
-    compile project(':libuvccamera')
+    api project(':libuvccamera')
 }

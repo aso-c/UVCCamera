@@ -45,8 +45,8 @@ public class MainActivity extends BaseActivity {
 			final Fragment fragment = new CameraFragment();
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, fragment).commit();
-		}
-	}
+		}; /* if savedInstanceState == null */
+	}; /* onCreate */
 
 	@Override
 	protected void onResume() {
@@ -82,4 +82,4 @@ public class MainActivity extends BaseActivity {
         }
 	}
 
-}
+}; /* MainActivity */
